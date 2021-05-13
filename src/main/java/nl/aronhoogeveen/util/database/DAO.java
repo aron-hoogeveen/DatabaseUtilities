@@ -102,9 +102,10 @@ public interface DAO<T> {
      * Deletes the instance associated with identifier {@code id}.
      *
      * @param id the identifier
+     * @return {@code true} if the instance is deleted, {@code false} otherwise
      * @throws DAOException if an error occurred
      */
-    void delete(int id) throws DAOException;
+    boolean delete(int id) throws DAOException;
 
     /**
      * Deletes the instance associated with identifier {@code id}. Instead of throwing an exception this will return
