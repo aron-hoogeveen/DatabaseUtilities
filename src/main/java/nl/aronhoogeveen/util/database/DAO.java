@@ -9,8 +9,9 @@ import java.util.Collection;
  * Object.
  *
  * @param <T> the class that this DAO will provide the data access for
+ * @param <S> the type of identifier used
  */
-public interface DAO<T> {
+public interface DAO<S extends Number, T> {
 
     /**
      * Checks if there exists an instance for the provided identifier {@code id}.
@@ -19,7 +20,7 @@ public interface DAO<T> {
      * @return {@code true} if such an instance exists, {@code false} otherwise
      * @throws DAOException if an error occurred
      */
-    boolean exists(int id) throws DAOException;
+    boolean exists(S id) throws DAOException;
 
     /**
      * Retrieves the instance with identifier {@code id}.
@@ -28,7 +29,7 @@ public interface DAO<T> {
      * @return an optional with a Map.Entry for the object, or no object if it is not found
      * @throws DAOException if an error occurred
      */
-    Optional<T> get(int id) throws DAOException;
+    Optional<T> get(S id) throws DAOException;
 
     /**
      * Returns a mapping of the instance with identifier {@code id}.
@@ -37,7 +38,7 @@ public interface DAO<T> {
      * @return a mapping for the instance
      * @throws DAOException if an error occurred
      */
-    Optional<Map.Entry<Integer, T>> getMapping(int id) throws DAOException;
+    Optional<Map.Entry<S, T>> getMapping(S id) throws DAOException;
 
     /**
      * Returns a Collection of all instances.
@@ -53,7 +54,7 @@ public interface DAO<T> {
      * @return a map with all mappings
      * @throws DAOException if an error occurred
      */
-    Map<Integer, T> getMap() throws DAOException;
+    Map<S, T> getMap() throws DAOException;
 
     /**
      * Update the instance identified by {@code id}.
@@ -62,7 +63,7 @@ public interface DAO<T> {
      * @param t the new object value
      * @throws DAOException if an error occurred
      */
-    void update(int id, T t) throws DAOException;
+    void update(S id, T t) throws DAOException;
 
     /**
      * Update the instance identified by {@code id}. Instead of throwing an exception this method will return {@code false}.
@@ -70,7 +71,7 @@ public interface DAO<T> {
      * @param id the identifier
      * @param t the new object value
      */
-    boolean updateValue(int id, T t);
+    boolean updateValue(S id, T t);
 
     /**
      * Adds the instance to the underlying data structure.
@@ -79,7 +80,7 @@ public interface DAO<T> {
      * @return the identifier for retrieving the instance
      * @throws DAOException if an error occurred
      */
-    int add(T t) throws DAOException;
+    S add(T t) throws DAOException;
 
     /**
      * Adds the instance to the underlying data structure. Instead of throwing an exception this method will return
@@ -105,7 +106,7 @@ public interface DAO<T> {
      * @return {@code true} if the instance is deleted, {@code false} otherwise
      * @throws DAOException if an error occurred
      */
-    boolean delete(int id) throws DAOException;
+    boolean delete(S id) throws DAOException;
 
     /**
      * Deletes the instance associated with identifier {@code id}. Instead of throwing an exception this will return
@@ -114,7 +115,7 @@ public interface DAO<T> {
      * @param id the identifier
      * @return {@code true} if the identifier was successfully deleted, {@code false} otherwise
      */
-    boolean deleteValue(int id);
+    boolean deleteValue(S id);
 
     /**
      * If this Data Access Object uses some form of connection, calling this method will close the connection, otherwise
